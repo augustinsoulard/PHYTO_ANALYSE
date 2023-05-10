@@ -8,32 +8,33 @@
 #
 
 library(shiny)
-
-# Define UI for application that draws a histogram
-ui =  shinyUI(fluidPage(
-
-    # Application title
-    titlePanel("PHYTO ANALYSE"),
+ui = shinyUI(fluidPage(
+    titlePanel("File Input"),
     em("Par Augustin Soulard"),
-    # Sidebar with a slider input for number of bins
+    br(),
     sidebarLayout(
         sidebarPanel(
-            fileInput("file","Charger le fichier.csv"),
-            helpText("5MB max"),
-            sliderInput("bins",
-                        "Number of bins:",
-                        min = 1,
-                        max = 50,
-                        value = 30)
+            fileInput("file","Charger le fichier.csv"), # fileinput() function is used to get the file upload contorl option
+            helpText("5MB maximal"),
+            tags$hr(),
+            h5(helpText("Select the read.table parameters below")),
+           # checkboxInput(inputId = 'header', label = 'Header', value = FALSE),
+          #  checkboxInput(inputId = "stringAsFactors", "stringAsFactors", FALSE),
+            br(),
+          #  radioButtons(inputId = 'sep', label = 'Separator', choices = c(Comma=',',Semicolon=';',Tab='\t', Space=''), selected = ',')
         ),
-
-        # Show a plot of the generated distribution
         mainPanel(
-            plotOutput("distPlot")
+            uiOutput("tb"),
+            downloadButton("downloadData","Tableau des relevés"),
+            downloadButton("downloadData2","Détails des espèces")
+            
+            # use below code if you want the tabset programming in the main panel. If so, then tabset will appear when the app loads for the first time.
+            #       tabsetPanel(tabPanel("Summary", verbatimTextOutput("sum")),
+            #                   tabPanel("Data", tableOutput("table")))
         )
+        
     )
 ))
-
 
 # Run the application
 setwd("~/Programmation/Github/PHYTO_ANALYSE")
